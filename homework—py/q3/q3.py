@@ -1,0 +1,30 @@
+# Save this file to your Github as OpenCV-11-Haar-face-video.py
+import cv2
+import numpy as np
+print(cv2.__version__)
+
+
+faceCascade = cv2.CascadeClassifier('Resources/haarcascade_fullbody.xml')
+carCascade = cv2.CascadeClassifier('Resources/cars.xml')
+capture = cv2.VideoCapture('Resources/car7.mp4')
+# capture = cv2.VideoCapture(0)
+#capture.set(3,640)
+#capture.set(4,480)
+
+while True:
+    success, img = capture.read()
+    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = faceCascade.detectMultiScale(imgGray, 1.4 ,1)
+    car = carCascade.detectMultiScale(imgGray, 1.4, 2)
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)#body is blue
+    for (x, y, w, h) in car:
+            cv2.rectangle(img, (x, y), (x + w, y + h), (0, 255, 0), 2)#car is green
+
+    cv2.imshow('Frame', img)
+    #cv2.moveWindow('Frame', 100,20)
+    if cv2.waitKey(1) == ord('q'):
+        break
+
+capture.release()
+cv2.destroyAllWindows()
