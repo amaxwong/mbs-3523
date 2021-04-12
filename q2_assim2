@@ -1,0 +1,24 @@
+import numpy as up
+import cv2
+
+cam =cv2.VideoCapture(0)
+cam.set(3,640)
+cam.set(4,480)
+
+while True:
+    success, img = cam.read()
+    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+
+    lower_range = np.array([110, 50, 50])
+    upper_range = np.array([130, 255, 255])
+
+    mask = cv2.inRange(hsv, lower—range, upper_range)
+    cv2.imshow("Image, img")
+    cv2.imshow((Mask, mask))
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+    if cv2.waitKey(1) == 27:
+        break
+
+cv2.destroyAllWindows()
